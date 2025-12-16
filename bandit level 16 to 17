@@ -1,1 +1,316 @@
+ssh bandit16@bandit.labs.overthewire.org -p 2220 
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit16@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+                                                                                                                   
+  This machine might hold several wargames.                                                                        
+  If you are playing "somegame", then:                                                                             
+                                                                                                                   
+    * USERNAMES are somegame0, somegame1, ...                                                                      
+    * Most LEVELS are stored in /somegame/.                                                                        
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.                                                  
+                                                                                                                   
+  Write-access to homedirectories is disabled. It is advised to create a                                           
+  working directory with a hard-to-guess name in /tmp/.  You can use the                                           
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit16@bandit:~$ man nmap
+bandit16@bandit:~$ nmap -p 31000-32000 localhost
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-12-16 17:08 UTC
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00017s latency).
+Not shown: 996 closed tcp ports (conn-refused)
+PORT      STATE SERVICE
+31046/tcp open  unknown
+31518/tcp open  unknown
+31691/tcp open  unknown
+31790/tcp open  unknown
+31960/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 0.11 seconds
+bandit16@bandit:~$ nmap -p 31046,31518,31691,31790,31960 -A localhost
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-12-16 17:15 UTC
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00020s latency).
+
+PORT      STATE SERVICE     VERSION
+31046/tcp open  echo
+31518/tcp open  ssl/echo
+| ssl-cert: Subject: commonName=SnakeOil
+| Not valid before: 2024-06-10T03:59:50
+|_Not valid after:  2034-06-08T03:59:50
+|_ssl-date: TLS randomness does not represent time
+31691/tcp open  echo
+31790/tcp open  ssl/unknown
+| ssl-cert: Subject: commonName=SnakeOil
+| Not valid before: 2024-06-10T03:59:50
+|_Not valid after:  2034-06-08T03:59:50
+|_ssl-date: TLS randomness does not represent time
+| fingerprint-strings: 
+|   FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, LPDString, RTSPRequest, SIPOptions: 
+|_    Wrong! Please enter the correct current password.
+31960/tcp open  echo
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port31790-TCP:V=7.94SVN%T=SSL%I=7%D=12/16%Time=694193CF%P=x86_64-pc-lin
+SF:ux-gnu%r(GenericLines,32,"Wrong!\x20Please\x20enter\x20the\x20correct\x
+SF:20current\x20password\.\n")%r(GetRequest,32,"Wrong!\x20Please\x20enter\
+SF:x20the\x20correct\x20current\x20password\.\n")%r(HTTPOptions,32,"Wrong!
+SF:\x20Please\x20enter\x20the\x20correct\x20current\x20password\.\n")%r(RT
+SF:SPRequest,32,"Wrong!\x20Please\x20enter\x20the\x20correct\x20current\x2
+SF:0password\.\n")%r(Help,32,"Wrong!\x20Please\x20enter\x20the\x20correct\
+SF:x20current\x20password\.\n")%r(FourOhFourRequest,32,"Wrong!\x20Please\x
+SF:20enter\x20the\x20correct\x20current\x20password\.\n")%r(LPDString,32,"
+SF:Wrong!\x20Please\x20enter\x20the\x20correct\x20current\x20password\.\n"
+SF:)%r(SIPOptions,32,"Wrong!\x20Please\x20enter\x20the\x20correct\x20curre
+SF:nt\x20password\.\n");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 151.67 seconds
+bandit16@bandit:~$ cat /etc/bandit_pass/bandit16
+kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+bandit16@bandit:~$ openssl s_client -connect localhost:31790
+CONNECTED(00000003)
+Can't use SSL_get_servername
+depth=0 CN = SnakeOil
+verify error:num=18:self-signed certificate
+verify return:1
+depth=0 CN = SnakeOil
+verify return:1
+---
+Certificate chain
+ 0 s:CN = SnakeOil
+   i:CN = SnakeOil
+   a:PKEY: rsaEncryption, 4096 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Jun 10 03:59:50 2024 GMT; NotAfter: Jun  8 03:59:50 2034 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIFBzCCAu+gAwIBAgIUBLz7DBxA0IfojaL/WaJzE6Sbz7cwDQYJKoZIhvcNAQEL
+BQAwEzERMA8GA1UEAwwIU25ha2VPaWwwHhcNMjQwNjEwMDM1OTUwWhcNMzQwNjA4
+MDM1OTUwWjATMREwDwYDVQQDDAhTbmFrZU9pbDCCAiIwDQYJKoZIhvcNAQEBBQAD
+ggIPADCCAgoCggIBANI+P5QXm9Bj21FIPsQqbqZRb5XmSZZJYaam7EIJ16Fxedf+
+jXAv4d/FVqiEM4BuSNsNMeBMx2Gq0lAfN33h+RMTjRoMb8yBsZsC063MLfXCk4p+
+09gtGP7BS6Iy5XdmfY/fPHvA3JDEScdlDDmd6Lsbdwhv93Q8M6POVO9sv4HuS4t/
+jEjr+NhE+Bjr/wDbyg7GL71BP1WPZpQnRE4OzoSrt5+bZVLvODWUFwinB0fLaGRk
+GmI0r5EUOUd7HpYyoIQbiNlePGfPpHRKnmdXTTEZEoxeWWAaM1VhPGqfrB/Pnca+
+vAJX7iBOb3kHinmfVOScsG/YAUR94wSELeY+UlEWJaELVUntrJ5HeRDiTChiVQ++
+wnnjNbepaW6shopybUF3XXfhIb4NvwLWpvoKFXVtcVjlOujF0snVvpE+MRT0wacy
+tHtjZs7Ao7GYxDz6H8AdBLKJW67uQon37a4MI260ADFMS+2vEAbNSFP+f6ii5mrB
+18cY64ZaF6oU8bjGK7BArDx56bRc3WFyuBIGWAFHEuB948BcshXY7baf5jjzPmgz
+mq1zdRthQB31MOM2ii6vuTkheAvKfFf+llH4M9SnES4NSF2hj9NnHga9V08wfhYc
+x0W6qu+S8HUdVF+V23yTvUNgz4Q+UoGs4sHSDEsIBFqNvInnpUmtNgcR2L5PAgMB
+AAGjUzBRMB0GA1UdDgQWBBTPo8kfze4P9EgxNuyk7+xDGFtAYzAfBgNVHSMEGDAW
+gBTPo8kfze4P9EgxNuyk7+xDGFtAYzAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3
+DQEBCwUAA4ICAQAKHomtmcGqyiLnhziLe97Mq2+Sul5QgYVwfx/KYOXxv2T8ZmcR
+Ae9XFhZT4jsAOUDK1OXx9aZgDGJHJLNEVTe9zWv1ONFfNxEBxQgP7hhmDBWdtj6d
+taqEW/Jp06X+08BtnYK9NZsvDg2YRcvOHConeMjwvEL7tQK0m+GVyQfLYg6jnrhx
+egH+abucTKxabFcWSE+Vk0uJYMqcbXvB4WNKz9vj4V5Hn7/DN4xIjFko+nREw6Oa
+/AUFjNnO/FPjap+d68H1LdzMH3PSs+yjGid+6Zx9FCnt9qZydW13Miqg3nDnODXw
++Z682mQFjVlGPCA5ZOQbyMKY4tNazG2n8qy2famQT3+jF8Lb6a4NGbnpeWnLMkIu
+jWLWIkA9MlbdNXuajiPNVyYIK9gdoBzbfaKwoOfSsLxEqlf8rio1GGcEV5Hlz5S2
+txwI0xdW9MWeGWoiLbZSbRJH4TIBFFtoBG0LoEJi0C+UPwS8CDngJB4TyrZqEld3
+rH87W+Et1t/Nepoc/Eoaux9PFp5VPXP+qwQGmhir/hv7OsgBhrkYuhkjxZ8+1uk7
+tUWC/XM0mpLoxsq6vVl3AJaJe1ivdA9xLytsuG4iv02Juc593HXYR8yOpow0Eq2T
+U5EyeuFg5RXYwAPi7ykw1PW7zAPL4MlonEVz+QXOSx6eyhimp1VZC11SCg==
+-----END CERTIFICATE-----
+subject=CN = SnakeOil
+issuer=CN = SnakeOil
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: RSA-PSS
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 2103 bytes and written 373 bytes
+Verification error: self-signed certificate
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Server public key is 4096 bit
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 18 (self-signed certificate)
+---
+---
+Post-Handshake New Session Ticket arrived:
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_256_GCM_SHA384
+    Session-ID: 0E1A2253AC20870C11B7985BB65ABBD15B7A951F10661D7F889E76D1AAD22AFB
+    Session-ID-ctx: 
+    Resumption PSK: 0CCABAB3D7AD5A16D9DCF9E07AC395706563382D9BDD9D9E2187EFB35790F610AFD3C888C19172B66AAEBE7D93B5FDB6
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - 04 dd e1 60 f1 77 f2 f0-85 66 ff 88 64 23 f4 5b   ...`.w...f..d#.[
+    0010 - 35 3a 28 14 2c a8 07 a9-47 db 2f 60 88 b1 63 f2   5:(.,...G./`..c.
+    0020 - 52 3b 06 e8 fa 40 fa 08-2b 4c 4b aa 04 64 40 88   R;...@..+LK..d@.
+    0030 - 13 7c fd de f6 92 86 44-fe a5 3a 7b 07 38 7b 26   .|.....D..:{.8{&
+    0040 - 94 19 07 87 33 99 64 6c-4f c1 0d 29 a2 28 f0 de   ....3.dlO..).(..
+    0050 - 01 1c 94 2b e0 db af 68-bc 17 93 f2 ac 66 b2 04   ...+...h.....f..
+    0060 - 7e cd bc f9 f1 bb bd 0a-37 a1 de 12 66 22 ba 13   ~.......7...f"..
+    0070 - c5 02 d5 38 a6 a1 b4 09-5b f1 c0 78 a5 d6 e8 e1   ...8....[..x....
+    0080 - d7 1e e9 35 51 bc bd fd-3b ae 82 c9 17 01 26 73   ...5Q...;.....&s
+    0090 - 12 92 9a 83 45 91 2b 72-22 c9 81 81 78 aa 7d 80   ....E.+r"...x.}.
+    00a0 - c1 08 66 8c ee 9b ee f2-aa a7 a8 80 e6 51 f5 ae   ..f..........Q..
+    00b0 - 53 31 e8 e9 4d 77 a8 2f-b6 f8 d8 55 f8 56 b4 2e   S1..Mw./...U.V..
+    00c0 - 40 c2 d1 f5 1a 4a 3f 2c-c7 48 70 9e 1b 9c 35 19   @....J?,.Hp...5.
+    00d0 - a6 e5 ec 58 2c 34 f3 ce-d1 d4 ab e5 73 fe 97 0d   ...X,4......s...
+
+    Start Time: 1765905768
+    Timeout   : 7200 (sec)
+    Verify return code: 18 (self-signed certificate)
+    Extended master secret: no
+    Max Early Data: 0
+---
+read R BLOCK
+---
+Post-Handshake New Session Ticket arrived:
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_256_GCM_SHA384
+    Session-ID: C41BABCE42F0D07951976FDFCFD130DD52955CD120A5D50FEC09C513C403B630
+    Session-ID-ctx: 
+    Resumption PSK: 24559E81A8FCDB4A1A0637057112E3F6B2415C7799526533ACE5004CB9524EF04E9B5FA2849C400DD5A62A48070F68D9
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - 04 dd e1 60 f1 77 f2 f0-85 66 ff 88 64 23 f4 5b   ...`.w...f..d#.[
+    0010 - e7 85 ee 26 f7 bb ed 37-0d 53 d1 f4 1b cb de c4   ...&...7.S......
+    0020 - d9 e7 11 84 8c b8 80 96-d2 f1 ce 7e c7 a9 f6 f3   ...........~....
+    0030 - 01 eb 98 c0 9d 86 29 cf-43 34 4d c9 ed 94 18 14   ......).C4M.....
+    0040 - 4a a6 67 4a 0f 32 53 e9-80 e3 bf fb c1 ff 4b 6b   J.gJ.2S.......Kk
+    0050 - 37 42 83 20 ff 8e dc 40-c3 c0 d1 fc c3 35 b7 99   7B. ...@.....5..
+    0060 - 02 75 60 26 82 6d 10 ef-22 3f f1 bf 31 06 2c 4a   .u`&.m.."?..1.,J
+    0070 - 96 ba 1d 9f cf 22 0e eb-ef 5d 86 f2 e6 90 bd fd   ....."...]......
+    0080 - 22 21 d6 14 b4 b3 96 84-8b 36 71 fb 4e e7 48 d2   "!.......6q.N.H.
+    0090 - f6 9d eb b2 cd 64 d3 a6-3f 30 8f 3b cb 3d ec c2   .....d..?0.;.=..
+    00a0 - cd ac d0 cc 44 f1 fe da-f1 91 56 69 53 22 f1 b3   ....D.....ViS"..
+    00b0 - 53 33 5e a8 87 5f 05 bb-55 09 a2 09 94 ad 15 a6   S3^.._..U.......
+    00c0 - 4f 8d 6c fa 09 cf 16 82-53 e8 0a 92 b7 f5 ab 9f   O.l.....S.......
+    00d0 - aa 54 d3 da 4b af bc 34-97 27 c1 31 9a 89 62 e1   .T..K..4.'.1..b.
+
+    Start Time: 1765905768
+    Timeout   : 7200 (sec)
+    Verify return code: 18 (self-signed certificate)
+    Extended master secret: no
+    Max Early Data: 0
+---
+read R BLOCK
+kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+ ncat --ssl localhost 31790
+kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+Correct!
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
 
