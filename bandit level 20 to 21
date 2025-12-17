@@ -1,1 +1,16 @@
-
+TRANSMITTER:
+ls
+suconnect
+bandit20@bandit:~$ man nc
+bandit20@bandit:~$ ./suconnect
+Usage: ./suconnect <portnumber>
+This program will connect to the given port on localhost using TCP. If it receives the correct password from the other side, the next password is transmitted back.
+bandit20@bandit:~$ ./suconnect 9999
+Read: 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+Password matches, sending next password
+RECIEVER:
+ nc -lvp 9999
+Listening on 0.0.0.0 9999
+Connection received on localhost 55652
+0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+EeoULMCra2q0dSkYj561DX7s1CpBuOBt
