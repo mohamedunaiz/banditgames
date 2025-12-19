@@ -1,1 +1,120 @@
+bandit28@bandit:~$ cat /ect/bandit_pass/bandit28
+cat: /ect/bandit_pass/bandit28: No such file or directory
+bandit28@bandit:~$ cat /etc/bandit_pass/bandit28
+Yz9IpLOsBcCeuG7m9uQFt8ZNpS4HZRcN
+ git clone ssh://bandit28-git@bandit.labs.overthewire.org:2220/home/bandit28-git/repo
+Cloning into 'repo'...
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit28-git@bandit.labs.overthewire.org's password:
+Permission denied, please try again.
+bandit28-git@bandit.labs.overthewire.org's password:
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 9 (delta 2), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (9/9), done.
+Resolving deltas: 100% (2/2), done.
+
+moham@Mohamedunaiz MINGW64 ~
+$ ls repo
+README.md
+
+moham@Mohamedunaiz MINGW64 ~
+$ cd repo
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ cat README.md
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git log
+commit b5ed4b5a3499533c2611217c8780e8ead48609f6 (HEAD -> master, origin/master, origin/HEAD)
+Author: Morla Porla <morla@overthewire.org>
+Date:   Tue Oct 14 09:26:24 2025 +0000
+
+    fix info leak
+
+commit 8b7c651b37ce7a94633b7b7b7c980ded19a16e4f
+Author: Morla Porla <morla@overthewire.org>
+Date:   Tue Oct 14 09:26:24 2025 +0000
+
+    add missing data
+
+commit 6d8e5e607602b597ade7504a550a29ba03f2cca0
+Author: Ben Dover <noone@overthewire.org>
+Date:   Tue Oct 14 09:26:24 2025 +0000
+
+    initial commit of README.md
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git checkout 6d8e5e607602b597ade7504a550a29ba03f2cca0
+Note: switching to '6d8e5e607602b597ade7504a550a29ba03f2cca0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 6d8e5e6 initial commit of README.md
+
+moham@Mohamedunaiz MINGW64 ~/repo ((6d8e5e6...))
+$ ls
+README.md
+
+moham@Mohamedunaiz MINGW64 ~/repo ((6d8e5e6...))
+$ cat README.md
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: <TBD>
+
+
+moham@Mohamedunaiz MINGW64 ~/repo ((6d8e5e6...))
+$ git checkout 8b7c651b37ce7a94633b7b7b7c980ded19a16e4f
+Previous HEAD position was 6d8e5e6 initial commit of README.md
+HEAD is now at 8b7c651 add missing data
+
+moham@Mohamedunaiz MINGW64 ~/repo ((8b7c651...))
+$ ls
+README.md
+
+moham@Mohamedunaiz MINGW64 ~/repo ((8b7c651...))
+$ cat README.md
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
 
