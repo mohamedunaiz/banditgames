@@ -1,0 +1,139 @@
+moham@Mohamedunaiz MINGW64 ~
+$ git clone ssh://bandit31-git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+Cloning into 'repo'...
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit31-git@bandit.labs.overthewire.org's password:
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+
+moham@Mohamedunaiz MINGW64 ~
+$ ls repo
+README.md
+
+moham@Mohamedunaiz MINGW64 ~
+$ cd repo
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ cat README.md
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ ls
+README.md
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ nano key.txt
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ ls
+README.md  key.txt
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git add key.txt
+The following paths are ignored by one of your .gitignore files:
+key.txt
+hint: Use -f if you really want to add them.
+hint: Disable this message with "git config set advice.addIgnoredFile false"
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ ls -a
+./  ../  .git/  .gitignore  README.md  key.txt
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ cat .gitignore
+*.txt
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ rm .gitignore
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git add key.txt
+warning: in the working copy of 'key.txt', LF will be replaced by CRLF the next time Git touches it
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   key.txt
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    .gitignore
+
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git commit -m "hi"
+[master b8a7036] hi
+ 1 file changed, 2 insertions(+)
+ create mode 100644 key.txt
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git log
+commit b8a7036dce9c5f869b13c883345dd85043cff1b2 (HEAD -> master)
+Author: mohamedunaiz001-create <mohamedunaiz001@gmail.com>
+Date:   Fri Dec 19 23:00:54 2025 +0530
+
+    hi
+
+commit cd07323d7f306c783ace9cbd45668f9c7f621122 (origin/master, origin/HEAD)
+Author: Ben Dover <noone@overthewire.org>
+Date:   Tue Oct 14 09:26:24 2025 +0000
+
+    initial commit
+
+moham@Mohamedunaiz MINGW64 ~/repo (master)
+$ git push
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit31-git@bandit.labs.overthewire.org's password:
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 322 bytes | 161.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: ### Attempting to validate files... ####
+remote:
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote:
+remote: Well done! Here is the password for the next level:
+remote: 3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K
+remote:
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote:
+To ssh://bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+ ! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to 'ssh://bandit.labs.overthewire.org:2220/home/bandit31-git/repo'
+
